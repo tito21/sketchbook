@@ -1,4 +1,4 @@
-sketchbook
+Sketchbook
 ==========
 
-My personal sketchbook. Lots of prossecing stuff
+My personal sketchbook. Lots of [Processing](http://processing.org) stuff
