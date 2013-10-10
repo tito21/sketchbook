@@ -19,7 +19,7 @@ class Ant {
     acl = new PVector(0, 0);
 
     max_speed = 2;
-    max_force = .03;
+    max_force = .3;
     r = 6;
 
     vel.normalize();
@@ -27,14 +27,18 @@ class Ant {
   }
 
   void run() {
-    PVector point = wander();
-    PVector wall = walls();
-    PVector a = PVector.add(wall, point);
-    a.mult(.5);
-     ellipse(a.x, a.y, 10, 10);
-    seek(a);
+    PVector wander = wander();
+    PVector front = getInFront();
+    wander.mult(1.0);
+    front.mult(3.0);
+
+    newton(front);
+    newton(wander);
+
     update();
+    borders();
     disp();
+    map.mark(loc);
   }
 
   void newton(PVector force) {
@@ -47,61 +51,64 @@ class Ant {
     vel.limit(max_speed);
     loc.add(vel);
     acl.mult(0);
-    map.mark(loc);
   }
 
-  void seek(PVector target) {
+  PVector seek(PVector target) {
     PVector des = PVector.sub(target, loc);
     des.normalize();
     des.limit(max_speed);
     des.sub(vel);
-    newton(des);
+    return des;
   }
 
   PVector wander() {
+    float radius = 40;
+    float dis = 30;
+    float angleX = .5;
+    float angle = vel.heading() + random(-angleX, angleX); 
+
     PVector point = vel.get();
-    point.normalize();
-    point.mult(100);
+    point.mult(dis);
     point.add(loc);
-    float theta = point.heading() + random(-1.3, 1.3);
-    PVector target = new PVector(cos(theta)*10, sin(theta)*10); 
-    point.add(target);
-    point.normalize();
-    point.mult(max_speed);
-    return point;
+
+    PVector target = new PVector(radius*cos(angle), radius*sin(angle));
+    target.add(point);
+    /*/
+     line(loc.x, loc.y, point.x, point.y);
+     noFill();
+     ellipse(point.x, point.y, radius, radius);
+     fill(100);
+     ellipse(target.x, target.y, 10, 10);
+    /*/
+    return seek(target);
   }
 
-  PVector walls() {
-    float d = 15;    
-    PVector desired = null;
+  PVector getInFront() {
+    PVector point = vel.get();
+    point.mult(4*r);
+    point.add(loc);
+    float value = map.getValue(point);
+    PVector front = point.get(); 
+    front.normalize();
+    front.mult(value);
 
-    if (loc.x < d) {
-      desired = new PVector(max_speed, vel.y);
-    } 
-    else if (loc.x > width -d) {
-      desired = new PVector(-max_speed, vel.y);
-    } 
+    line(loc.x, loc.y, point.x, point.y);
+    fill(0, 255, 0, value + 25);
+    ellipse(point.x, point.y, 5, 5);
 
-    if (loc.y < d) {
-      desired = new PVector(vel.x, max_speed);
-    } 
-    else if (loc.y > height-d) {
-      desired = new PVector(vel.x, -max_speed);
-    } 
+    return seek(front);
+  }
 
-    if (desired != null) {
-      desired.normalize();
-      desired.mult(max_speed);
-    } else {
-      desired = new PVector(0, 0);
-    }
-    desired.normalize();
-    return desired;
+  void borders() {
+    if (loc.x < -r) loc.x = width+r;
+    if (loc.y < -r) loc.y = height+r;
+    if (loc.x > width+r) loc.x = -r;
+    if (loc.y > height+r) loc.y = -r;
   }
 
   void disp() {
     float theta = vel.heading() + PI/2;
-    fill(127);
+    fill(103, 80, 65);
     stroke(0);
     strokeWeight(1);
     pushMatrix();
