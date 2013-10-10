@@ -56,35 +56,19 @@ PVector walls() {
   point.mult(250);
   point.add(loc);
 
-  if (point.x < d) {
-    point = PVector.mult(vel, -1);
+  if (point.x < d || point.x > width -d || point.y < d || point.y > height-d) {
     past = true;
-  } 
-  else if (point.x > width -d) {
-    point = PVector.mult(vel, -1);
-    past =true;
-  } 
-
-  if (point.y < d) {
-    point = PVector.mult(vel, -1);
-    past = true;
-  } 
-  else if (point.y > height-d) {
-    point = PVector.mult(vel, -1); 
-    past = true;
-  } 
+  }
 
   if (past) {
+    PVector des = PVector.mult(point, -1);
     fill(0);
-    ellipse(point.x, point.y, 10, 10);
-    point.add(loc);
-    point.mult(max_speed);
     line(loc.x, loc.y, point.x, point.y);
     ellipse(point.x, point.y, 10, 10);
-    point = new PVector(width/2, height/2);
+    //point = new PVector(width/2, height/2);
     ellipse(point.x, point.y, 10, 10);
     point = seek(point);
-    ellipse(point.x, point.y, 10, 10);
+    //ellipse(point.x, point.y, 10, 10);
     return point;
   }
   else { 
