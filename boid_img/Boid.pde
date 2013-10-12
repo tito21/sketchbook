@@ -11,7 +11,7 @@ class Ball {
   float mass;
 
   Ball(float _max_speed, float _max_force, float _mass, PImage _img) {
-    loc = new PVector(random(width), random(height));
+    loc = new PVector(mouseX+ random(-30, 30), mouseY+random(-30, 30));
     vel = new PVector(0, 0);
     acl = new PVector(0, 0);
     mouseP = new PVector(mouseX, mouseY);
@@ -25,8 +25,8 @@ class Ball {
     mouseP.set(mouseX, mouseY);
     PVector seek = seek(mouseP);
     PVector sepa = separate();
-    seek.mult(.5);
-    sepa.mult(2.0);
+    seek.mult(2.5);
+    sepa.mult(0.5);
     newton(seek);
     newton(sepa);
     update();
@@ -82,11 +82,11 @@ class Ball {
 
     void display() {
       fill(0, 50);
-      float theta = vel.heading() + PI/4;
+      float theta = vel.heading();
       pushMatrix();
       translate(loc.x, loc.y);
       rotate(theta);
-      image(img, 25, 22);
+      image(img, 0, 0, 20*mass, 20*mass);
       popMatrix();
     }
 

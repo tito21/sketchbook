@@ -4,7 +4,7 @@ PImage img;
 
 void setup() {
   size(500, 500);
-  rectMode(CENTER);
+  imageMode(CENTER);
   img = loadImage("zapa.png");
   noStroke();
   balls = new ArrayList();
@@ -21,5 +21,9 @@ void draw() {
     Ball b = (Ball) balls.get(i); 
     b.run();
   }
+}
+
+void mousePressed() {
+  balls.add(new Ball(random(1, 12), random(.1, .2), random(.25, 4), img));
 }
 
