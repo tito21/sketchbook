@@ -29,8 +29,14 @@ class Ant {
   void run() {
     PVector wander = wander();
     PVector front = getInFront();
-    wander.mult(1.0);
-    front.mult(3.0);
+    if (front.mag() > 3) {
+      wander.mult(0);
+      front.mult(10.0);
+    } 
+    else {
+      front.mult(0);
+      wander.mult(1);
+    }
 
     newton(front);
     newton(wander);
@@ -84,18 +90,19 @@ class Ant {
   }
 
   PVector getInFront() {
-    PVector point = vel.get();
-    point.mult(4*r);
-    point.add(loc);
-    float value = map.getValue(point);
-    PVector front = point.get(); 
-    front.normalize();
-    front.mult(value);
-
-    line(loc.x, loc.y, point.x, point.y);
-    fill(0, 255, 0, value + 25);
-    ellipse(point.x, point.y, 5, 5);
-
+    PVector front = new PVector(1, 1);
+    float t = 1;
+    float value = map.getValue(loc, vel);
+    if (value > t) {
+      print(" "+ value);
+      front = vel.get();
+      front.mult(3*value);
+    }
+    else {
+      front.mult(0);
+    }
+    stroke(0);
+    line(loc.x, loc.y, front.x + loc.x, front.y + loc.y);
     return seek(front);
   }
 
