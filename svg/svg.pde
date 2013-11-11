@@ -28,7 +28,7 @@ void draw() {
       pushMatrix();
       translate(i*40, j*40);
       scale(.125);
-      int times = (int)random(2, 10);
+      int times = (int)random(1, 5);
       for (int k = 0; k < times; k++) {
         fill(getRandomColor());
         shape(getRandomShape(), 0, 0);
