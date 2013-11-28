@@ -1,13 +1,12 @@
-float steps = 0.1;
+float steps = 0.00001;
 float noise = 0;
 float n = 0;
-int res = 30;
+int res = 50;
 
 Mesh grid;
 
 void setup() {
   size(600, 600, P3D);
-  frameRate(10);
   grid = new Mesh(width/res, height/res, res);
 }
 
@@ -18,8 +17,10 @@ void draw() {
     for (int j = 0; j < grid.y; j++) {
       n += steps;
       noise = noise(n*i, n*j);
+      grid.setColor(i, j, color(noise*255));
       grid.extrude(i, j, noise*100);
     }
   }  
   grid.disp();
 }
+
