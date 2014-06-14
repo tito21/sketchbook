@@ -15,7 +15,7 @@ void setup() {
       colors[i] = tmp;
     }
   }
-  for (int i = 1; i < 11; i++) {
+  for (int i = 1; i < 1; i++) {
     shapes.add(loadShape("shape"+i+".svg"));
     shapes.get(i-1).disableStyle();
   }

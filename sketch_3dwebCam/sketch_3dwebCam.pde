@@ -2,10 +2,10 @@ import processing.video.*;
 
 Capture cam;
 
-int res = 5;
+int res = 2;
 
 void setup() {
-  size(640, 400, P3D);
+  size(320*res, 240*res, P3D);
 
   String[] cameras = Capture.list();
 
@@ -16,9 +16,9 @@ void setup() {
   else {
     println("Available cameras:");
     for (int i = 0; i < cameras.length; i++) {
-      println(cameras[i]);
+      println(i+" "+cameras[i]);
     }
-    cam = new Capture(this, cameras[1]); 
+    cam = new Capture(this, cameras[6]); 
     cam.start();
     
     noStroke();
