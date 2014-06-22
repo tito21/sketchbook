@@ -1,6 +1,6 @@
 ArrayList<PShape> shapes; 
 int[] colors;
-Arrays array;
+ColorShapeArrays array;
 
 void setup() {
   size(640, 640);
@@ -10,7 +10,7 @@ void setup() {
 
   setArrays();
 
-  array = new Arrays(shapes, colors);
+  array = new ColorShapeArrays(shapes, colors);
 }
 
 void draw() {
@@ -43,4 +43,3 @@ void setArrays() {
     shapes.get(i-1).disableStyle();
   }
 }
-

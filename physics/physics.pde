@@ -1,58 +1,23 @@
-/* Physics */
-
-Ball b;
-float gravity = 1;
+Physics  ball;
+float s = 10;
 
 void setup() {
-  size(500,500);
-  noStroke();
-  smooth(3);
+  size(500, 500);
   ellipseMode(CENTER);
-  b = new Ball(100, 100, 1, 2, 50, 2);
+  ball = new Physics(width/2, height/2, s);
+
+  ball.windOn(2, .01);
+  ball.gravityOn(1, .1);
+  ball.dragOn(.01);
+  ball.wrap();
 }
 
-void draw(){
-  background(100);
-  b.display();
-  b.move2();
-  b.move();
-}
-
-class Ball {
-  float pX;
-  float pY;
-  float vX;
-  float vY;
-  float size;
-  float mass;
-  float fX;
-  float fY;
-  
-  Ball(float _pX, float _pY, float _fX, float _fY, float _size, float _mass) {
-    pX = _pX;
-    pY = _pY;
-    fX = _fX;
-    fY = _fY;
-    size = _size;
-    mass = mass;
-  }
-  void display() {
-    fill(255);
-    ellipse(pX, pY, size, size);
-  }
-  void move(){
-    if (pX < 0 || pX > width) {
-      vX = -vX;
-    }
-    else if (pY < 0 || pY > height) {
-      vY = -vY;
-    }
-    //vY = vY + gravity;
-    pX = pX + vX;
-    pY = pY + vY;
-  }
-  void move2() {
-    fY = gravity * mass + vY*mass;
-    fX = vX*mass;
-  }
+void draw() {
+  background(25);
+  pushMatrix();
+  ball.update();
+  translate(ball.loc.x, ball.loc.y);
+    noStroke();
+  ellipse(0, 0, s, s);
+  popMatrix();
 }

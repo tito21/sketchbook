@@ -1,8 +1,8 @@
-class Arrays {
+class ColorShapeArrays {
   ArrayList<PShape> shapes; 
   int[] colors;
 
-  Arrays(ArrayList _shapes, int[] _colors) {
+  ColorShapeArrays(ArrayList _shapes, int[] _colors) {
     shapes = _shapes;                                                                                
     colors = _colors;
   }
@@ -18,4 +18,3 @@ class Arrays {
     return colors[c];
   }
 }
-
