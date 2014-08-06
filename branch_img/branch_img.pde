@@ -15,7 +15,7 @@ void setup() {
 }
 
 void draw() {
-  for (int i = 0; i < branches.size(); i++) {
+  for (int i = 0; i < branches.size (); i++) {
     Branch s = (Branch) branches.get(i);
     s.disp();
     s.update();
@@ -45,6 +45,7 @@ class Branch {
   float l;
   float mag;
   color c;
+  Boolean arive;
 
   Branch(float posX, float posY, float _tX, float _tY, color _c) {
 
@@ -55,11 +56,15 @@ class Branch {
     tLoc = new PVector(_tX, _tY);
     oldLoc = new PVector(loc.x, loc.y);
     c = _c;
+    arive = false;
   }
 
   void disp() {
-    stroke(c);
-    line(loc.x, loc.y, oldLoc.x, oldLoc.y);
+    if (arive) {
+    } else {
+      stroke(c);
+      line(loc.x, loc.y, oldLoc.x, oldLoc.y);
+    }
   }
   void update() {
     oldLoc = loc.get();
@@ -72,10 +77,13 @@ class Branch {
     theta = map(theta * 3, -1, 1, 45, -45);
     dis = PVector.sub(tLoc, loc);
     mag =dis.mag();
-    dis.normalize();
-    dis.mult(l);
-    dis.rotate(radians(theta));
-    vel = dis.get();
+    if (mag > 10) {
+      dis.normalize();
+      dis.mult(l);
+      dis.rotate(radians(theta));
+      vel = dis.get();
+    } else {
+      arive = true;
+    }
   }
 }
-

@@ -5,7 +5,7 @@ Capture cam;
 int res = 2;
 
 void setup() {
-  size(320*res, 240*res, P3D);
+  size(648, 480, P3D);
 
   String[] cameras = Capture.list();
 
@@ -18,7 +18,7 @@ void setup() {
     for (int i = 0; i < cameras.length; i++) {
       println(i+" "+cameras[i]);
     }
-    cam = new Capture(this, cameras[6]); 
+    cam = new Capture(this, cameras[1]); 
     cam.start();
     
     noStroke();
@@ -45,4 +45,3 @@ void draw() {
     }
   }
 }
-
