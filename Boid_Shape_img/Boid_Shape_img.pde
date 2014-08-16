@@ -7,11 +7,11 @@ void setup() {
   size(700, 500);
   background(255);
   stroke(255);
-  strokeWeight(5);
+  strokeWeight(8);
   fill(0);
   shapeMode(CENTER);
   shapes = new ArrayList();
-  for (int i = 1; i < 7; i++) {
+  for (int i = 1; i < 8; i++) {
     shapes.add(loadShape("shape"+i+".svg"));
     shapes.get(i-1).disableStyle();
   }
@@ -36,7 +36,7 @@ void draw() {
   //fill(0, 10);
   //rect(-1, -1, width+1, height+1);
   //background(255);
-  if (frameCount > 800) { 
+  if (frameCount > 500) { 
     saveFrame("img" + round(random(100))); 
     noLoop();
   }

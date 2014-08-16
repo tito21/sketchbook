@@ -1,46 +1,42 @@
 PImage img;
 PImage des;
 
+ArrayList <PVector>points;
+
 void setup() {
-  size(360, 480, P2D);
+  size(360, 480);
   frameRate(30);
+  points = new ArrayList();
   img = loadImage("image.jpg");
+  img.filter(THRESHOLD);
   des = createImage(img.width, img.height, RGB);
+  noLoop();
 }
 
 void draw() {
   //image(img, 0,0);
-  background(200);
-  float threshold = map(mouseX, 0, width, 0, 30);
-  float br = mouseY;
+  background(255);
+
   img.loadPixels();
   des.loadPixels();
 
-  for (int x = 1; x < width; x++) {
-    for (int y = 0; y < height; y++) {      
+  for (int x = 0; x < width; x+=1) {
+    for (int y = 0; y < height; y+=1) {      
       int p = x + y*width;
-      int pLeft = (x-1) + y*width;
       float c = brightness(img.pixels[p]);
-      float cLeft = brightness(img.pixels[pLeft]); 
 
-      float diff = abs((c - threshold) - cLeft);
-
-      float r = red(img.pixels[p]);
-      float g = green(img.pixels[p]);
-      float b = blue(img.pixels[p]);
-
-      des.pixels[p] = color(diff);
-    }
-  }
-  des.updatePixels();
-  for (int x = 1; x < width; x++) {
-    for (int y = 0; y < height; y++) {
-      int p = x + y*width;
-      float l = brightness(des.pixels[p]);
-      if (l > 30) {
-        line(x+random(-7, 7), y+random(-7, 7), x+random(-1, 1), y+random(-1, 1));
+      if (c < 128) {
+        points.add(new PVector(x, y));
       }
     }
   }
+  for (int i = 0; i < 10000; i++) {
+    points.remove(int(random(points.size())));
+  }
+    
+  for (PVector p : points) {
+    stroke(0,5);
+    PVector pn = points.get(int(random(points.size())));
+    line(p.x, p.y, pn.x, pn.y);
+  }
 }
-

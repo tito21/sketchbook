@@ -1,9 +1,10 @@
 ArrayList lines;
 
 void setup() {
-  size(500*2, 500*2);
+  size(700, 500);
   background(255);
   stroke(255);
+  strokeWeight(3);
   //frameRate(120);
   lines = new ArrayList();
   for (int i = 0; i > 50; i++) {
@@ -26,7 +27,10 @@ void draw() {
     b.run();
     if (b.dead()) lines.remove(i);
   }
-  if (frameCount > 500) saveFrame();
+  if (frameCount > 500 && frameCount < 505) {
+    saveFrame("img-"+"-"+frameCount+random(1 ));
+    print("save"+frameCount+"\n");
+  }
 }
 
 void newLine(float locX, float locY) {
