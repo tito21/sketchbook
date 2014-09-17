@@ -1,4 +1,4 @@
-ArrayList balls;
+ArrayList balls; //<>//
 
 PImage img;
 
@@ -16,8 +16,8 @@ void setup() {
 void draw() {
   //fill(0, 10);
   //rect(0, 0, width, height);
-  background(255); //<>//
-  for (int i = 0; i < balls.size(); i++) {
+  background(255);
+  for (int i = 0; i < balls.size (); i++) {
     Ball b = (Ball) balls.get(i); 
     b.run();
   }
@@ -26,4 +26,3 @@ void draw() {
 void mousePressed() {
   balls.add(new Ball(random(1, 12), random(.1, .2), random(.25, 4), img));
 }
-
