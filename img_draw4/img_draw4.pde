@@ -1,31 +1,31 @@
+import processing.serial.*;
+
+Serial myPort;
+
 PImage img;
-PImage des;
+int r, g, b = 0;
 
 void setup() {
   size(360, 480, P2D);
   img = loadImage("image.jpg");
-  des = createImage(img.width, img.height, RGB);
   image(img, 0, 0);
-  filter(POSTERIZE, 3);
+  
+  println(Serial.list());
+  String portName = Serial.list()[0];
+  myPort = new Serial(this, portName, 9600);
+  
 }
 
 void draw() {
-  loadPixels();
-  color cl = 0;
-  color c = 0;
-  for (int x=width; x < 0; x-=32) {
-    for (int y=height; y < 0; y-=32) {
-      int p = width*y + x;
-      c = pixels[p];
-      if (c > cl) {
-        stroke(c);
-        line(x, y, x-32, y-32);
-      }
-      cl = c;
-      println("f*ck2");
-    }
+  if (myPort.available() > 0) {
+   r = myPort.read(); 
   }
-  updatePixels();
-  println("f*ck");
+  if (myPort.available() > 0) {
+   g = myPort.read(); 
+  }
+  if (myPort.available() > 0) {
+   b = myPort.read(); 
+  }
+  tint(r, g, b);
+  image(img, 0, 0);
 }
-

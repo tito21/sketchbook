@@ -8,9 +8,6 @@ void setup() {
 }
 
 void draw() {
-}
-
-void mousePressed() {
   fill(img.get(mouseX, mouseY));
   ellipse(mouseX, mouseY, 16, 16);
 }

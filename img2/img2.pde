@@ -1,67 +1,39 @@
 PImage img;
-PImage des;
-PImage dif;
-
+int[] colors;
 
 void setup() {
-  size(360, 480);
-  img = loadImage("image.jpg");
-  des = createImage(img.width, img.height, RGB);
-  dif = createImage(img.width, img.height, RGB);
-  img.loadPixels();
-  des.loadPixels();
-  dif.loadPixels();
-  diference();
+  size(600, 400, P2D);
+  blendMode(ADD);
+  noFill();
+  img = loadImage("zorro.png");
+  colors = new int[width*height];
+  background(0);
+  noLoop();
 }
 
 void draw() {
-  float threshold = mouseX;
-  float br = mouseY;
   img.loadPixels();
-  des.loadPixels();
-  dif.loadPixels();
-  for (int x = 1; x < width; x++) {
-    for (int y = 0; y < height; y++) {      
-      int p = x + y*width;
-      color c = img.pixels[p]; 
-      int pLeft = (x-1) + y*width;
-      color cL = img.pixels[pLeft];
-
-      float r = red(img.pixels[p]);
-      float g = green(img.pixels[p]);
-      float b = blue(img.pixels[p]);
-     
-      if (r > threshold && g < (threshold+50)) {
-        r = 255;
-        g = 255;
-        b = 255;
-      }
+  for (int i = 0; i < img.pixels.length; i++) {
+    int c = img.pixels[i];
+    colors[i] = c;
+  }
+  for (int x = 0; x < img.width; x+=10) {
+    for (int y = 0; y < img.height; y+=10) {
+      float a = random(-10, 10);
+      float b = random(-10, 10);
+      float c = random(-10, 10);
+      float d = random(-10, 10);
+      float e = random(-10, 10);
+      float f = random(-10, 10);
+      float g = random(-10, 10);
+      float h = random(-10, 10);
       
-      des.pixels[p] = color(r,g,b);
+      stroke(colors[x+y*width]);
+      strokeWeight(2); 
+      bezier(a+x, b+y, c+x, d+y, x+e, y+f, x+g, y+h);
+      stroke(colors[x+y*width], 15);
+      strokeWeight(10);
+      bezier(a+x, b+y, c+x, d+y, x+e, y+f, x+g, y+h);
     }
   }
-  des.updatePixels();
-  image(des, 0, 0);
 }
-
-void diference() {
-  for (int x = 1; x < width; x++) {
-    for (int y = 0; y < height; y++) {      
-      int p = x + y*width;
-      color c = img.pixels[p];
-      int pLeft = (x-1) + y*width;
-      color cL = img.pixels[pLeft];
-
-      float diff = abs(brightness(c) - brightness(cL));
-      if (diff > 13) {
-        c = color(0);
-      }
-      else {
-        c = color(255);
-      }
-      dif.pixels[p] = c;
-    }
-  }
-  dif.updatePixels();
-}
-
